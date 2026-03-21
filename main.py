@@ -2,7 +2,7 @@ from playwright.async_api import async_playwright
 from playwright.sync_api import sync_playwright
 
 from src.web_scrapers.get_web_pages import get_web_pages
-from src.web_scrapers.get_xlsx import WebFilesLoader
+from src.web_scrapers.WebFilesLoader import WebFilesLoader
 from src.web_scrapers.models import WebPage
 
 CONFIG_PATH = "src/web_scrapers/config.yaml"
