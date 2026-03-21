@@ -29,10 +29,12 @@ if __name__ == '__main__':
         try:
             for path in web_page.paths:
                 print(f"= начинаем обработку пути {path}")
-                file_loader.follow_path(path)
-                links = file_loader.find_files(path[-1], [".xlsx", ".xls"])
-                for l in links:
-                    print(f"Найдена ссылка: {l}")
-                print("-----------------")
+                if file_loader.follow_path(path):
+                    links = file_loader.find_files(path[-1], [".xlsx", ".xls"])
+                    for l in links:
+                        print(f"Найдена ссылка: {l}")
+                    print("-----------------")
+                else:
+                    print(f"Не удалось проследовать по пути.")
         finally:
             file_loader.close()
