@@ -1,6 +1,6 @@
 from typing import Any
 
-from pydantic import BaseModel, field_validator
+from pydantic import BaseModel, field_validator, Field
 
 
 def find_all_paths(data: str | list[str] | dict[str, str | dict | list]) -> list[list[str]]:
