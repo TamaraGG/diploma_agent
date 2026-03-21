@@ -27,7 +27,7 @@ def find_all_paths(data: str | list[str] | dict[str, str | dict | list]) -> list
 class WebPage(BaseModel):
     name: str
     url: str
-    paths: list[list[str]] | None = None
+    paths: list[list[str]] = Field(default_factory=list)
 
     @field_validator("paths", mode="before")
     @classmethod
