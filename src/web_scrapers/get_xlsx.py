@@ -7,13 +7,6 @@ PATHS = {
     "https://www.cbr.ru/statistics/bank_sector/review/": "",
 }
 
-def get_xlsx_names(url: str) -> list[str]:
-    with sync_playwright() as p:
-        browser = p.chromium.launch(headless=False)
-        page = browser.new_page()
-        page.goto(url)
-
-        all_referenceable = page.query_selector_all("a")
 
 
 def follow_path(page: Page, path_list: list[str]) -> Locator:
