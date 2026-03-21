@@ -13,10 +13,6 @@ class WebFilesLoader:
         self.context: BrowserContext = self.browser.new_context()
         self.page: Page = self.context.new_page()
 
-
-    def change_url(self, url: str):
-        self.url = url
-        self.page.goto(self.url)
         if not self._is_url_file(self.url):
             self.page.goto(self.url)
 
