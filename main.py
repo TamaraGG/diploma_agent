@@ -1,7 +1,11 @@
+from playwright.async_api import async_playwright
 from playwright.sync_api import sync_playwright
 
-from src.web_scrapers.FilesLoader import FilesLoader
-from src.web_scrapers.get_xlsx import get_links
+from src.web_scrapers.get_web_pages import get_web_pages
+from src.web_scrapers.get_xlsx import WebFilesLoader
+from src.web_scrapers.models import WebPage
+
+CONFIG_PATH = "src/web_scrapers/config.yaml"
 
 URL = "https://www.cbr.ru/statistics/bank_sector/sors/"
 PATHS = [
@@ -16,13 +20,19 @@ PATHS = [
 ]
 
 if __name__ == '__main__':
-    # with sync_playwright() as p:
-    #     browser = p.chromium.launch(headless=False)
-    #     page = browser.new_page()
-    #     page.goto(URL)
-    #     file_loader = FilesLoader(page)
-    #     file_loader.navigate_path(PATHS[1])
-    #     links = file_loader.get_excel_files()
-    #     print(links)
-    #     browser.close()
-    get_links(URL, PATHS[0])
+
+    pages_list: list[WebPage] = get_web_pages(CONFIG_PATH)
+
+    for web_page in pages_list:
+        print(f"=== начинаем обработку страницы {web_page.url}")
+        file_loader = WebFilesLoader(web_page.url)
+        try:
+            for path in web_page.paths:
+                print(f"= начинаем обработку пути {path}")
+                file_loader.follow_path(path)
+                links = file_loader.find_files(path[-1], [".xlsx", ".xls"])
+                for l in links:
+                    print(f"Найдена ссылка: {l}")
+                print("-----------------")
+        finally:
+            file_loader.close()
