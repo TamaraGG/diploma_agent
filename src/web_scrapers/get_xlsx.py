@@ -104,6 +104,32 @@ class WebFilesLoader:
             locator.click()
             return False
 
+    def _is_url_file(self, url: str) -> bool:
+        if not url:
+            return False
+
+        full_url = urljoin(self.page.url, url)
+
+        clean_url = full_url.split('?')[0].lower()
+        file_extensions = ['.xlsx', '.xls', '.csv', '.zip', '.pdf', '.doc', '.docx']
+
+        if any(clean_url.endswith(ext) for ext in file_extensions):
+            return True
+
+        try:
+            response = self.page.request.head(full_url, timeout=5000)
+
+            # content_type = response.headers.get('content-type', '').lower()
+            content_disp = response.headers.get('content-disposition', '').lower()
+
+            if "attachment" in content_disp:
+                return True
+
+        except Exception as e:
+            print(f"Не удалось проверить URL {full_url}: {e}")
+
+        return False
+
     def close(self):
         self.browser.close()
         self.playwright.stop()
