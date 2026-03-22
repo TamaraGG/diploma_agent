@@ -15,7 +15,7 @@ class BaseScraper(ABC):
         pass
 
     @abstractmethod
-    def find_files_links(self, file_types: list[str]) -> list[Document]:
+    def get_all_documents(self, file_types: list[str]) -> list[Document]:
         """Возвращает ссылки на все ближайшие к текущему локатору файлы."""
         pass
 
