@@ -1,6 +1,6 @@
 from src.web_scrapers.core.models import WebPage
 from src.web_scrapers.get_web_pages import get_web_pages
-from src.web_scrapers.WebFilesFinder import WebFilesFinder
+from src.web_scrapers.scrapers.WebFilesFinder import WebFilesFinder
 
 CONFIG_PATH = "src/web_scrapers/config.yaml"
 
