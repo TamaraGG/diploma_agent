@@ -47,7 +47,7 @@ class WebFilesFinder:
         return
 
 
-    def find_files(self, file_types: list[str]) -> list[str]:
+    def find_files_links(self, file_types: list[str]) -> list[str]:
         """Возвращает ссылки на все ближайшие к тексту where файлы"""
         if self._is_url_file(self.url):
             return [self.url]

@@ -35,7 +35,7 @@ if __name__ == '__main__':
                     print(f"\n\n= начинаем обработку пути {path}\n\n")
                     last_locator = file_loader.follow_path(path)
                     if last_locator:
-                        links = file_loader.find_files([".xlsx", ".xls"])
+                        links = file_loader.find_files_links([".xlsx", ".xls"])
                         print(f"Найдено ссылок: {len(links)}")
                         # for l in links:
                         #     print(f"Найдена ссылка: {l}")
