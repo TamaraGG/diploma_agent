@@ -17,7 +17,6 @@ class WebFilesFinder:
             self.current_locator = self.page.locator("body")
 
 
-
     def follow_path(self, path_list: list[str]) -> Locator | None:
         """
         Прокликивает все элементы пути, ища каждый следующий внутри предыдущего.
@@ -47,6 +46,7 @@ class WebFilesFinder:
         self.current_locator = result
         return
 
+
     def find_files(self, file_types: list[str]) -> list[str]:
         """Возвращает ссылки на все ближайшие к тексту where файлы"""
         if self._is_url_file(self.url):
@@ -62,6 +62,7 @@ class WebFilesFinder:
         except Exception as e:
             print(f"Не удалось найти файлы типа {file_types} в секции {self.current_locator.inner_text()} (из-за ошибки \n{e} )")
         return []
+
 
     def _get_locator_files(self, locator: Locator, file_types: list[str] | None = None) -> list[str]:
         """Возвращает все файлы в локаторе."""
@@ -84,14 +85,12 @@ class WebFilesFinder:
             full_url = urljoin(self.url, href)
             is_file = self._is_url_file(full_url, file_types)
 
-
-
-
             if is_file:
                 if full_url not in valid_files:
                     valid_files.append(full_url)
 
         return valid_files
+
 
     def _is_locator_file(self, locator : Locator) -> bool:
         try:
@@ -128,9 +127,11 @@ class WebFilesFinder:
 
         return False
 
+
     def reset(self):
         self.page.reload()
         self.current_locator = self.page.locator("body")
+
 
     def close(self):
         self.browser.close()
