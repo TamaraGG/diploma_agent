@@ -41,4 +41,3 @@ class WebPage(BaseModel):
 class Document(BaseModel):
     name: str = Field(description="Название документа")
     versions: dict[date, list[str]] = Field(description="Словарь со всеми версиями документа по датам")
-    last_date: date = Field(description="Дата последней версии")
