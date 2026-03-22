@@ -14,8 +14,12 @@ class WebFilesLoader:
         if not self._is_url_file(self.url):
             self.page.goto(self.url)
 
-    def follow_path(self, path_list: list[str]) -> bool:
-        """Прокликивает все элемены пути"""
+    def follow_path(self, path_list: list[str]) -> Locator | None:
+        """
+        Прокликивает все элементы пути, ища каждый следующий внутри предыдущего.
+        Возвращает последний локатор.
+        """
+        result: Locator | None = None
         try:
             current_locator = self.page.locator("body")
 
