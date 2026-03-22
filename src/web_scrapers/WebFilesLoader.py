@@ -10,9 +10,13 @@ class WebFilesLoader:
         self.browser: Browser = self.playwright.chromium.launch(headless=False, slow_mo=300)
         self.context: BrowserContext = self.browser.new_context()
         self.page: Page = self.context.new_page()
+        self.current_locator: Locator | None = None
 
         if not self._is_url_file(self.url):
             self.page.goto(self.url)
+            self.current_locator = self.page.locator("body")
+
+
 
     def follow_path(self, path_list: list[str]) -> Locator | None:
         """
@@ -40,23 +44,23 @@ class WebFilesLoader:
         except Exception as e:
             print(f"Не удалось пройти по пути.\nerror: {e}")
 
-        self.page.reload()
-        return result
+        self.current_locator = result
+        return
 
-    def find_files(self, locator: Locator, file_types: list[str]) -> list[str]:
+    def find_files(self, file_types: list[str]) -> list[str]:
         """Возвращает ссылки на все ближайшие к тексту where файлы"""
         if self._is_url_file(self.url):
             return [self.url]
         try:
             while 1:
-                links = self._get_locator_files(locator)
+                links = self._get_locator_files(self.current_locator)
                 if links:
                     return links
-                locator = locator.locator("..")
+                locator = self.current_locator.locator("..")
                 print(f"Не нашли файлы в текущем элементе, поднимаемся на уровень выше.")
 
         except Exception as e:
-            print(f"Не удалось найти файлы типа {file_types} в секции {locator.inner_text()} (из-за ошибки \n{e} )")
+            print(f"Не удалось найти файлы типа {file_types} в секции {self.current_locator.inner_text()} (из-за ошибки \n{e} )")
         return []
 
     def _get_locator_files(self, locator: Locator, file_types: list[str] | None = None) -> list[str]:
@@ -123,6 +127,10 @@ class WebFilesLoader:
             print(f"Не удалось проверить URL {url}: {e}")
 
         return False
+
+    def reset(self):
+        self.page.reload()
+        self.current_locator = self.page.locator("body")
 
     def close(self):
         self.browser.close()
