@@ -23,18 +23,21 @@ if __name__ == '__main__':
 
     pages_list: list[WebPage] = get_web_pages(CONFIG_PATH)
 
-    for web_page in pages_list:
+    for web_page in pages_list[1:2]:
         print(f"=== начинаем обработку страницы {web_page.url}")
         file_loader = WebFilesLoader(web_page.url)
         try:
-            for path in web_page.paths:
-                print(f"= начинаем обработку пути {path}")
-                if file_loader.follow_path(path):
-                    links = file_loader.find_files(path[-1], [".xlsx", ".xls"])
-                    for l in links:
-                        print(f"Найдена ссылка: {l}")
-                    print("-----------------")
-                else:
-                    print(f"Не удалось проследовать по пути.")
+            if file_loader._is_url_file(web_page.url):
+                print(f"Найдена ссылка: {web_page.url}")
+            else:
+                for path in web_page.paths:
+                    print(f"= начинаем обработку пути {path}")
+                    if file_loader.follow_path(path):
+                        links = file_loader.find_files(path[-1], [".xlsx", ".xls"])
+                        for l in links:
+                            print(f"Найдена ссылка: {l}")
+                        print("-----------------")
+                    else:
+                        print(f"Не удалось проследовать по пути.")
         finally:
             file_loader.close()

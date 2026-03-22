@@ -1,4 +1,5 @@
 import os
+from multiprocessing.resource_tracker import cleanup_noop
 from urllib.parse import urljoin
 
 import requests
@@ -37,6 +38,8 @@ class WebFilesLoader:
 
     def find_files(self, where: str, file_types: list[str]) -> list[str]:
         """Возвращает ссылки на все ближайшие к тексту where файлы"""
+        if self._is_url_file(self.url):
+            return [self.url]
         try:
             locator = self.page.get_by_text(where)
             while 1:
@@ -52,6 +55,11 @@ class WebFilesLoader:
 
     def _get_locator_files(self, locator: Locator, file_types: list[str] | None = None) -> list[str]:
         """Возвращает все файлы в локаторе."""
+
+        href = locator.get_attribute("href") or None
+        if href and self._is_url_file(urljoin(self.url, href)):
+            return [urljoin(self.url, href)]
+
         all_links = locator.locator("a").all()
         valid_files = []
 
@@ -64,25 +72,10 @@ class WebFilesLoader:
                 continue
 
             full_url = urljoin(self.url, href)
-            link_text = link.inner_text().lower()
-            link_class = link.get_attribute("class") or ""
-            is_file = False
+            is_file = self._is_url_file(full_url, file_types)
 
-            if any(ext in href.lower() for ext in file_types):
-                is_file = True
-            elif any(keyword in link_text for keyword in ['скачать', ' мб', ' кб'] + file_types):
-                is_file = True
-            elif "file" in link_class.lower():
-                is_file = True
-            else:
-                try:
-                    response = self.page.request.head(full_url, timeout=10000)
-                    content_type = response.headers.get('content-type', '').lower()
-                    content_disp = response.headers.get('content-disposition', '').lower()
-                    if "attachment" in content_disp or "spreadsheet" in content_type or "excel" in content_type:
-                        is_file = True
-                except Exception as e:
-                    print(f"Тайм-аут или ошибка при проверке ссылки {full_url}: {e}")
+
+
 
             if is_file:
                 if full_url not in valid_files:
@@ -101,21 +94,19 @@ class WebFilesLoader:
             locator.click()
             return False
 
-    def _is_url_file(self, url: str) -> bool:
+
+    def _is_url_file(self, url: str, file_types: list[str] | None = None) -> bool:
         if not url:
             return False
+        if not file_types:
+            file_types = ['.xlsx', '.xls', '.csv', '.zip', '.pdf', '.doc', '.docx']
 
-        full_url = urljoin(self.page.url, url)
-
-        clean_url = full_url.split('?')[0].lower()
-        file_extensions = ['.xlsx', '.xls', '.csv', '.zip', '.pdf', '.doc', '.docx']
-
-        if any(clean_url.endswith(ext) for ext in file_extensions):
+        clean_url = url.split('?')[0].lower()
+        if any(clean_url.endswith(ext) for ext in file_types):
             return True
 
         try:
-            response = self.page.request.head(full_url, timeout=5000)
-
+            response = self.page.request.head(url, timeout=5000)
             # content_type = response.headers.get('content-type', '').lower()
             content_disp = response.headers.get('content-disposition', '').lower()
 
@@ -123,7 +114,7 @@ class WebFilesLoader:
                 return True
 
         except Exception as e:
-            print(f"Не удалось проверить URL {full_url}: {e}")
+            print(f"Не удалось проверить URL {url}: {e}")
 
         return False
 
