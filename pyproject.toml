@@ -1,26 +1,25 @@
-[project]
-name = "diploma-agent"
+[tool.poetry]
+name = "diplomaagent"
 version = "0.1.0"
-package-mode = false
 description = ""
-authors = [
-    {name = "Tamara Goncharova",email = "goncharova2804t@gmail.com"}
-]
-requires-python = ">=3.14"
-dependencies = [
-    "playwright (>=1.58.0,<2.0.0)",
-    "requests (>=2.32.5,<3.0.0)",
-    "pyyaml (>=6.0.3,<7.0.0)",
-    "pydantic (>=2.12.5,<3.0.0)"
-]
+authors = ["myasko <komondor25@gmail.com>"]
+readme = "README.md"
 
+[tool.poetry.dependencies]
+python = "^3.14"
+requests = "^2.32.5"
+playwright = "^1.58.0"
+pandas = "^3.0.1"
+basemodel = "^20190604.1625"
+pydantic = "^2.12.5"
+pyyaml = "^6.0.3"
 
-[build-system]
-requires = ["poetry-core>=2.0.0,<3.0.0"]
-build-backend = "poetry.core.masonry.api"
 
 [[tool.poetry.source]]
 name = "pypi-mirror"
 url = "https://pypi.tuna.tsinghua.edu.cn/simple"
 priority = "primary"
 
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
