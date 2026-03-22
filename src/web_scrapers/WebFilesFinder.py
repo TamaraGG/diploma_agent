@@ -52,11 +52,11 @@ class WebFilesFinder:
         if self._is_url_file(self.url):
             return [self.url]
         try:
-            while 1:
+            while self.current_locator is not self.page.locator("body"):
                 links = self._get_locator_files(self.current_locator)
                 if links:
                     return links
-                locator = self.current_locator.locator("..")
+                self.current_locator = self.current_locator.locator("..")
                 print(f"Не нашли файлы в текущем элементе, поднимаемся на уровень выше.")
 
         except Exception as e:
