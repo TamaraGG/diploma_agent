@@ -28,8 +28,7 @@ if __name__ == '__main__':
             else:
                 for path in web_page.paths:
                     print(f"\n\n= начинаем обработку пути {path}\n\n")
-                    last_locator = file_loader.follow_path(path)
-                    if last_locator:
+                    if file_loader.follow_path(path):
                         links = file_loader.find_files_links([".xlsx", ".xls"])
                     else:
                         print(f"Не удалось проследовать по пути.")
