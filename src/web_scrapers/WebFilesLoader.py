@@ -43,12 +43,11 @@ class WebFilesLoader:
         self.page.reload()
         return result
 
-    def find_files(self, where: str, file_types: list[str]) -> list[str]:
+    def find_files(self, locator: Locator, file_types: list[str]) -> list[str]:
         """Возвращает ссылки на все ближайшие к тексту where файлы"""
         if self._is_url_file(self.url):
             return [self.url]
         try:
-            locator = self.page.get_by_text(where)
             while 1:
                 links = self._get_locator_files(locator)
                 if links:
