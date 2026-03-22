@@ -17,21 +17,27 @@ class WebFilesLoader:
     def follow_path(self, path_list: list[str]) -> bool:
         """Прокликивает все элемены пути"""
         try:
-            for path in path_list:
-                element = self.page.get_by_text(path, exact=True).first
+            current_locator = self.page.locator("body")
 
-                element.wait_for(state="visible", timeout=5000)
-                if not self._is_locator_file(element):
-                    element.click()
+            for path in path_list:
+                current_locator = current_locator.locator("*").filter(has_text=path)
+
+                step_element = current_locator.last
+                step_element.wait_for(state="visible")
+
+                if not self._is_locator_file(step_element):
                     print(f"Кликнули по: {path}.")
+                    step_element.click()
                 else:
                     print(f"{path} - ссылка на скачивание файла. Не кликаем на нее.")
-                    return False
-        except Exception as e:
-            print(f"Не удалось кликнуть по заголовку.\nerror: {e}")
-            return False
-        return True
 
+            result = current_locator.last
+
+        except Exception as e:
+            print(f"Не удалось пройти по пути.\nerror: {e}")
+
+        self.page.reload()
+        return result
 
     def find_files(self, where: str, file_types: list[str]) -> list[str]:
         """Возвращает ссылки на все ближайшие к тексту where файлы"""
