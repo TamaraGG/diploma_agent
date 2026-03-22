@@ -56,7 +56,7 @@ class WebFilesLoader:
                 print(f"Не нашли файлы в текущем элементе, поднимаемся на уровень выше.")
 
         except Exception as e:
-            print(f"Не удалось найти файлы типа {file_types} в секции {where} (из-за ошибки \n{e} )")
+            print(f"Не удалось найти файлы типа {file_types} в секции {locator.inner_text()} (из-за ошибки \n{e} )")
         return []
 
     def _get_locator_files(self, locator: Locator, file_types: list[str] | None = None) -> list[str]:
