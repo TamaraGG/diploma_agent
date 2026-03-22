@@ -23,7 +23,7 @@ if __name__ == '__main__':
 
     pages_list: list[WebPage] = get_web_pages(CONFIG_PATH)
 
-    for web_page in pages_list[1:2]:
+    for web_page in pages_list:
         print(f"\n\n=== начинаем обработку страницы {web_page.url}\n\n")
         file_loader = WebFilesLoader(web_page.url)
         try:
