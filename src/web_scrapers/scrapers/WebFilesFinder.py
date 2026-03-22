@@ -2,7 +2,10 @@ from urllib.parse import urljoin
 
 from playwright.sync_api import sync_playwright, Page, Locator, BrowserContext, Browser, Playwright
 
-class WebFilesFinder:
+from src.web_scrapers.core.base_scraper import BaseScraper
+
+
+class WebFilesFinder(BaseScraper):
     def __init__(self, url: str):
         self.url = url
         self.playwright: Playwright = sync_playwright().start()
