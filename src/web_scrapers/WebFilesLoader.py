@@ -34,7 +34,7 @@ class WebFilesLoader:
                 step_element.wait_for(state="visible")
 
                 if not self._is_locator_file(step_element):
-                    print(f"Кликнули по: {path}.")
+                    print(f"Кликаем по: {path}.")
                     step_element.click()
                 else:
                     print(f"{path} - ссылка на скачивание файла. Не кликаем на нее.")
