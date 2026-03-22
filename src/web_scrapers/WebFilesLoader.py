@@ -1,8 +1,5 @@
-import os
-from multiprocessing.resource_tracker import cleanup_noop
 from urllib.parse import urljoin
 
-import requests
 from playwright.sync_api import sync_playwright, Page, Locator, BrowserContext, Browser, Playwright
 
 class WebFilesLoader:
