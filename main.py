@@ -23,8 +23,10 @@ if __name__ == '__main__':
     for web_page in pages_list:
         print(f"\n\n=== начинаем обработку страницы {web_page.url}\n\n")
         file_loader = WebFilesFinder(web_page.url)
+        links = []
         try:
             if file_loader._is_url_file(web_page.url):
+                links = [web_page.url]
             else:
                 for path in web_page.paths:
                     print(f"\n\n= начинаем обработку пути {path}\n\n")
