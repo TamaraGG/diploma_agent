@@ -1,4 +1,4 @@
-from typing import Any
+from typing import Any, Self
 
 from pydantic import BaseModel, field_validator, Field
 from datetime import date
@@ -41,3 +41,10 @@ class WebPage(BaseModel):
 class Document(BaseModel):
     name: str = Field(description="Название документа")
     versions: dict[date, list[str]] = Field(description="Словарь со всеми версиями документа по датам")
+
+    @field_validator("versions", mode="before")
+    @classmethod
+    def sort_versions(cls, value: Any) -> Any:
+        if isinstance(value, dict):
+            sorted(value)
+        return value
