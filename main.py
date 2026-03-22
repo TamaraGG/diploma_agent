@@ -24,20 +24,22 @@ if __name__ == '__main__':
     pages_list: list[WebPage] = get_web_pages(CONFIG_PATH)
 
     for web_page in pages_list[1:2]:
-        print(f"=== начинаем обработку страницы {web_page.url}")
+        print(f"\n\n=== начинаем обработку страницы {web_page.url}\n\n")
         file_loader = WebFilesLoader(web_page.url)
         try:
             if file_loader._is_url_file(web_page.url):
-                print(f"Найдена ссылка: {web_page.url}")
+                print(f"Найдено ссылок: {1}")
+                # print(f"Найдена ссылка: {web_page.url}")
             else:
                 for path in web_page.paths:
-                    print(f"= начинаем обработку пути {path}")
-                        for l in links:
-                            print(f"Найдена ссылка: {l}")
-                        print("-----------------")
+                    print(f"\n\n= начинаем обработку пути {path}\n\n")
                     last_locator = file_loader.follow_path(path)
                     if last_locator:
                         links = file_loader.find_files(last_locator, [".xlsx", ".xls"])
+                        print(f"Найдено ссылок: {len(links)}")
+                        # for l in links:
+                        #     print(f"Найдена ссылка: {l}")
+                        # print("-----------------")
                     else:
                         print(f"Не удалось проследовать по пути.")
         finally:
