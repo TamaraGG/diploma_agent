@@ -44,7 +44,7 @@ class WebFilesFinder:
             print(f"Не удалось пройти по пути.\nerror: {e}")
 
         self.current_locator = result
-        return
+        return self.current_locator
 
 
     def find_files_links(self, file_types: list[str]) -> list[str]:
