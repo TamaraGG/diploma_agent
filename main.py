@@ -2,7 +2,7 @@ from playwright.async_api import async_playwright
 from playwright.sync_api import sync_playwright
 
 from src.web_scrapers.get_web_pages import get_web_pages
-from src.web_scrapers.WebFilesLoader import WebFilesLoader
+from src.web_scrapers.WebFilesFinder import WebFilesFinder
 from src.web_scrapers.models import WebPage
 
 CONFIG_PATH = "src/web_scrapers/config.yaml"
@@ -25,7 +25,7 @@ if __name__ == '__main__':
 
     for web_page in pages_list:
         print(f"\n\n=== начинаем обработку страницы {web_page.url}\n\n")
-        file_loader = WebFilesLoader(web_page.url)
+        file_loader = WebFilesFinder(web_page.url)
         try:
             if file_loader._is_url_file(web_page.url):
                 print(f"Найдено ссылок: {1}")
