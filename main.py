@@ -25,7 +25,6 @@ if __name__ == '__main__':
         file_loader = WebFilesFinder(web_page.url)
         links = []
         try:
-            if file_loader._is_url_file(web_page.url):
                 links = [web_page.url]
             else:
                 for path in web_page.paths:
@@ -39,3 +38,4 @@ if __name__ == '__main__':
                     print(links)
         finally:
             file_loader.close()
+                if file_loader.is_url_file(web_page.url):

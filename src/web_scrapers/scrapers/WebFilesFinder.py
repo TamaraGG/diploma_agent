@@ -15,7 +15,7 @@ class WebFilesFinder(BaseScraper):
         self.page: Page = self.context.new_page()
         self.current_locator: Locator | None = None
 
-        if not self._is_url_file(self.url):
+        if not self.is_url_file(self.url):
             self.page.goto(self.url)
             self.current_locator = self.page.locator("body")
 
