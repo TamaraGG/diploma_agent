@@ -22,20 +22,20 @@ if __name__ == '__main__':
 
     for web_page in pages_list:
         print(f"\n\n=== начинаем обработку страницы {web_page.url}\n\n")
-        file_loader = WebFilesFinder(web_page.url)
-        links = []
-        try:
-                links = [web_page.url]
-            else:
-                for path in web_page.paths:
-                    print(f"\n\n= начинаем обработку пути {path}\n\n")
-                    if file_loader.follow_path(path):
-                        links = file_loader.get_all_documents([".xlsx", ".xls"])
-                    else:
-                        print(f"Не удалось проследовать по пути.")
-                    file_loader.reset()
-                    print(f"Найдено файлов: {len(links)}")
-                    print(links)
-        finally:
-            file_loader.close()
+        with WebFilesFinder(web_page.url) as file_loader:
+            links = []
+            try:
                 if file_loader.is_url_file(web_page.url):
+                    links = [web_page.url]
+                else:
+                    for path in web_page.paths:
+                        print(f"\n\n= начинаем обработку пути {path}\n\n")
+                        if file_loader.follow_path(path):
+                            links = file_loader.get_all_documents([".xlsx", ".xls"])
+                        else:
+                            print(f"Не удалось проследовать по пути.")
+                        file_loader.reset()
+                        print(f"Найдено файлов: {len(links)}")
+                        print(links)
+            finally:
+                file_loader.close()

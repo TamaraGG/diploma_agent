@@ -8,17 +8,25 @@ from src.web_scrapers.core.base_scraper import BaseScraper
 class WebFilesFinder(BaseScraper):
     def __init__(self, url: str):
         self.url = url
+
+    def __enter__(self):
         self.playwright: Playwright = sync_playwright().start()
 
         self.browser: Browser = self.playwright.chromium.launch(headless=False, slow_mo=300)
         self.context: BrowserContext = self.browser.new_context()
         self.page: Page = self.context.new_page()
+
         self.current_locator: Locator | None = None
 
         if not self.is_url_file(self.url):
             self.page.goto(self.url)
             self.current_locator = self.page.locator("body")
 
+        return self
+
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        self.browser.close()
+        self.playwright.stop()
 
     def follow_path(self, path_list: list[str]) -> Locator | None:
         """
