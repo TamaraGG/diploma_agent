@@ -5,7 +5,7 @@ from playwright.sync_api import sync_playwright, Page, Locator, BrowserContext, 
 from src.web_scrapers.core.base_scraper import BaseScraper
 
 
-class WebFilesFinder(BaseScraper):
+class UniversalScraper(BaseScraper):
     def __init__(self, url: str):
         self.url = url
 
