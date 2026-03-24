@@ -1,12 +1,12 @@
 from datetime import datetime
 
-from src.file_loading.models.models import DocumentVersion
+from src.file_loading.models.models import DocumentVersions
 from src.file_loading.version_manager.base_version_manager import BaseVersionManager
 
 
 class VersionManager(BaseVersionManager):
     @staticmethod
-    def get_latest_version(documents: list[DocumentVersion]) -> datetime | None:
+    def get_latest_version(documents: list[DocumentVersions]) -> datetime | None:
         if not documents:
             return None
 
