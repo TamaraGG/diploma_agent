@@ -4,7 +4,7 @@ from urllib.parse import urljoin
 from playwright.sync_api import sync_playwright, Page, Locator, BrowserContext, Browser, Playwright
 
 from src.file_loading.scraper.base_scraper import BaseScraper
-from src.file_loading.models.models import Document
+from src.file_loading.models.models import DocumentVersion
 from src.file_loading.functions.extract_date_from_text import extract_date_from_text
 
 
@@ -61,19 +61,19 @@ class UniversalScraper(BaseScraper):
         return self.current_locator
 
 
-    def get_all_documents(self, file_types: list[str]) -> list[Document]:
+    def get_all_documents(self, file_types: list[str]) -> list[DocumentVersion]:
         """Возвращает ссылки на все ближайшие к тексту where файлы"""
         if self.is_url_file(self.url):
-            return [Document(url=urljoin(self.url, self.url),
-                             name=self.url.split("/")[-1],
-                             load_date=None)]
+            return [DocumentVersion(url=urljoin(self.url, self.url),
+                                    name=self.url.split("/")[-1],
+                                    load_date=None)]
         try:
             while self.current_locator is not self.page.locator("body"):
                 links = self._get_document_locators(self.current_locator)
                 if links:
-                    return [Document(name=link.split("/")[-1],
-                                     url=link.url,
-                                     load_date=None) for link in links]
+                    return [DocumentVersion(name=link.split("/")[-1],
+                                            url=link.url,
+                                            load_date=None) for link in links]
                 self.current_locator = self.current_locator.locator("..")
                 print(f"Не нашли файлы в текущем элементе, поднимаемся на уровень выше.")
 

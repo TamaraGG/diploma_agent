@@ -4,7 +4,7 @@ from urllib.parse import urljoin
 
 from playwright.sync_api import Playwright, Browser, Page, Locator
 
-from src.file_loading.models.models import Document
+from src.file_loading.models.models import DocumentVersion
 from src.file_loading.scraper.sbr_scraper.strategies import get_date_from_referenceable, \
     get_date_from_versions_item
 from src.file_loading.scraper.universal_scraper.universal_scraper import UniversalScraper
@@ -28,12 +28,12 @@ class SbrScraper(UniversalScraper):
             "versions_item": get_date_from_versions_item
         }
 
-    def get_all_documents(self, file_types: list[str] | None = None) -> list[Document]:
+    def get_all_documents(self, file_types: list[str] | None = None) -> list[DocumentVersion]:
         """Возвращает ссылки на все ближайшие к текущему локатору файлы."""
         if self.is_url_file(self.url):
-            return [Document(url=urljoin(self.url, self.url),
-                             name=self.url.split("/")[-1],
-                             load_date=None)]
+            return [DocumentVersion(url=urljoin(self.url, self.url),
+                                    name=self.url.split("/")[-1],
+                                    load_date=None)]
         try:
             while self.current_locator is not self.page.locator("body"):
                 links = self._get_document_locators(self.current_locator)
@@ -58,7 +58,7 @@ class SbrScraper(UniversalScraper):
         return "plain"
 
 
-    def get_document_from_locator(self, locator: Locator) -> Document | None:
+    def get_document_from_locator(self, locator: Locator) -> DocumentVersion | None:
         href = locator.get_attribute("href")
         if not href:
             return None
@@ -70,7 +70,7 @@ class SbrScraper(UniversalScraper):
             date = None
 
         full_url = urljoin(self.url, href)
-        document = Document(url=full_url,
-                            name=href.split('/')[-1],
-                            load_date=date)
+        document = DocumentVersion(url=full_url,
+                                   name=href.split('/')[-1],
+                                   load_date=date)
         return document

@@ -2,7 +2,7 @@ from abc import ABC, abstractmethod
 
 from playwright.sync_api import Locator
 
-from src.file_loading.models.models import Document
+from src.file_loading.models.models import DocumentVersion
 
 
 class BaseScraper(ABC):
@@ -23,7 +23,7 @@ class BaseScraper(ABC):
         pass
 
     @abstractmethod
-    def get_all_documents(self, file_types: list[str]) -> list[Document]:
+    def get_all_documents(self, file_types: list[str]) -> list[DocumentVersion]:
         """Возвращает ссылки на все ближайшие к текущему локатору файлы."""
         pass
 

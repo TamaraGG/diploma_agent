@@ -1,5 +1,5 @@
 from src.file_loading.loader.web_file_loader import WebFileLoader
-from src.file_loading.models.models import WebPage, Document
+from src.file_loading.models.models import WebPage, DocumentVersion
 from src.file_loading.functions.get_web_pages import get_web_pages
 from src.file_loading.scraper.sbr_scraper.sbr_scraper import SbrScraper
 
@@ -8,7 +8,7 @@ CONFIG_PATH = "src/file_loading/config.yaml"
 if __name__ == '__main__':
 
     pages_list: list[WebPage] = get_web_pages(CONFIG_PATH)
-    files_links: list[Document] = []
+    files_links: list[DocumentVersion] = []
 
     # GET ALL LINKS
     for web_page in pages_list:
@@ -17,9 +17,9 @@ if __name__ == '__main__':
             links = []
             try:
                 if file_loader.is_url_file(web_page.url):
-                    links = [Document(load_date=None,
-                                      url=web_page.url,
-                                      name="")]
+                    links = [DocumentVersion(load_date=None,
+                                             url=web_page.url,
+                                             name="")]
                 else:
                     for path in web_page.paths:
                         print(f"\n\n= начинаем обработку пути {path}\n\n")

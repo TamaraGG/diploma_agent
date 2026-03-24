@@ -38,7 +38,7 @@ class WebPage(BaseModel):
         return value
 
 
-class Document(BaseModel):
+class DocumentVersion(BaseModel):
     name: str
     load_date: datetime | None = None
     url: str
