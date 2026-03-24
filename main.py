@@ -1,8 +1,8 @@
-from src.web_scrapers.core.models import WebPage
-from src.web_scrapers.get_web_pages import get_web_pages
-from src.web_scrapers.scrapers.WebFilesFinder import WebFilesFinder
+from src.file_loading.loader.web_file_loader import WebFileLoader
+from src.file_loading.models.models import WebPage, Document
+from src.file_loading.functions.get_web_pages import get_web_pages
+from src.file_loading.scraper.sbr_scraper.sbr_scraper import SbrScraper
 
-CONFIG_PATH = "src/web_scrapers/config.yaml"
 
 URL = "https://www.cbr.ru/statistics/bank_sector/sors/"
 PATHS = [
@@ -15,6 +15,7 @@ PATHS = [
         "Задолженность, в том числе просроченная, по кредитам, предоставленным юридическим лицам — резидентам и индивидуальным предпринимателям, по видам экономической деятельности и отдельным направлениям использования средств (на дату)"
     ]
 ]
+CONFIG_PATH = "src/file_loading/config.yaml"
 
 if __name__ == '__main__':
 
