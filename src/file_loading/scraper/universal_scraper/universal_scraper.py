@@ -94,7 +94,7 @@ class UniversalScraper(BaseScraper):
                 continue
 
             full_url = urljoin(self.url, href)
-            is_file = self._is_url_file(full_url, file_types)
+            is_file = self.is_url_file(full_url, file_types)
 
             if is_file:
                 if full_url not in valid_files:
@@ -115,7 +115,7 @@ class UniversalScraper(BaseScraper):
             return False
 
 
-    def _is_url_file(self, url: str, file_types: list[str] | None = None) -> bool:
+    def is_url_file(self, url: str, file_types: list[str] | None = None) -> bool:
         if not url:
             return False
         if not file_types:
