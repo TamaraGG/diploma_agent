@@ -61,15 +61,19 @@ class UniversalScraper(BaseScraper):
         return self.current_locator
 
 
-    def get_all_documents(self, file_types: list[str]) -> list[str]:
+    def get_all_documents(self, file_types: list[str]) -> list[Document]:
         """Возвращает ссылки на все ближайшие к тексту where файлы"""
-        if self._is_url_file(self.url):
-            return [self.url]
+        if self.is_url_file(self.url):
+            return [Document(url=urljoin(self.url, self.url),
+                             name=self.url.split("/")[-1],
+                             load_date=None)]
         try:
             while self.current_locator is not self.page.locator("body"):
                 links = self._get_document_locators(self.current_locator)
                 if links:
-                    return links
+                    return [Document(name=link.split("/")[-1],
+                                     url=link.url,
+                                     load_date=None) for link in links]
                 self.current_locator = self.current_locator.locator("..")
                 print(f"Не нашли файлы в текущем элементе, поднимаемся на уровень выше.")
 
