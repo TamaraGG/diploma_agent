@@ -46,11 +46,11 @@ class DocumentVersion(BaseModel):
 
 class Document(BaseModel):
     name: str = Field(description="Название документа")
-    versions: dict[datetime, list[str]] = Field(description="Словарь со всеми версиями документа по датам")
+    versions: list[DocumentVersion] = Field(description="Словарь со всеми версиями документа по датам")
 
     @field_validator("versions", mode="before")
     @classmethod
     def sort_versions(cls, value: Any) -> Any:
-        if isinstance(value, dict):
-            sorted(value)
+        if isinstance(value, list) and value and isinstance(value[0], DocumentVersion):
+            sorted(value, key=lambda x: x.load_date)
         return value
