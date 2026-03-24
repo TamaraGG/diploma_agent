@@ -1,8 +1,11 @@
+from datetime import datetime
 from urllib.parse import urljoin
 
 from playwright.sync_api import sync_playwright, Page, Locator, BrowserContext, Browser, Playwright
 
-from src.web_scrapers.core.base_scraper import BaseScraper
+from src.file_loading.scraper.base_scraper import BaseScraper
+from src.file_loading.models.models import Document
+from src.file_loading.functions.extract_date_from_text import extract_date_from_text
 
 
 class UniversalScraper(BaseScraper):
