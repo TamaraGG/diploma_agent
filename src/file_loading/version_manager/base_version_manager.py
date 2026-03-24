@@ -1,10 +1,10 @@
 from abc import ABC, abstractmethod
 
-from src.file_loading.models.models import DocumentVersions, DocumentVersion
+from src.file_loading.models.models import Document, DocumentVersion
 
 
 class BaseVersionManager(ABC):
     @staticmethod
     @abstractmethod
-    def get_latest_version(documents: list[DocumentVersions]) -> list[DocumentVersion]:
+    def get_latest_version(documents: list[Document]) -> list[DocumentVersion]:
         pass

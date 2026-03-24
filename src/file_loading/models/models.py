@@ -44,7 +44,7 @@ class DocumentVersion(BaseModel):
     url: str
 
 
-class DocumentVersions(BaseModel):
+class Document(BaseModel):
     name: str = Field(description="Название документа")
     versions: dict[datetime, list[str]] = Field(description="Словарь со всеми версиями документа по датам")
 
