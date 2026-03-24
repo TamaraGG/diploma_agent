@@ -2,10 +2,18 @@ from abc import ABC, abstractmethod
 
 from playwright.sync_api import Locator
 
-from src.web_scrapers.core.models import Document
+from src.file_loading.models.models import Document
 
 
 class BaseScraper(ABC):
+    @abstractmethod
+    def __enter__(self):
+        pass
+
+    @abstractmethod
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        pass
+
     @abstractmethod
     def follow_path(self, path_list: list[str]) -> Locator | None:
         """
@@ -21,8 +29,4 @@ class BaseScraper(ABC):
 
     @abstractmethod
     def reset(self) -> None:
-        pass
-
-    @abstractmethod
-    def close(self) -> None:
         pass
