@@ -1,7 +1,7 @@
 from typing import Any, Self
 
 from pydantic import BaseModel, field_validator, Field
-from datetime import date
+from datetime import date, datetime
 
 
 def find_all_paths(data: str | list[str] | dict[str, str | dict | list]) -> list[list[str]]:
@@ -40,7 +40,7 @@ class WebPage(BaseModel):
 
 class Document(BaseModel):
     name: str = Field(description="Название документа")
-    versions: dict[date, list[str]] = Field(description="Словарь со всеми версиями документа по датам")
+    versions: dict[datetime, list[str]] = Field(description="Словарь со всеми версиями документа по датам")
 
     @field_validator("versions", mode="before")
     @classmethod
