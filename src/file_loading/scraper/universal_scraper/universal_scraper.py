@@ -138,6 +138,15 @@ class UniversalScraper(BaseScraper):
 
         return False
 
+    def _get_date(self, locator: Locator) -> datetime | None:
+        for _ in range(3):
+            text = locator.inner_text()
+            date = extract_date_from_text(text)
+            if date:
+                return date
+            locator = locator.locator("..")
+        return None
+
 
     def reset(self):
         self.page.reload()
