@@ -46,7 +46,8 @@ class DocumentVersion(BaseModel):
 
 class Document(BaseModel):
     name: str = Field(description="Название документа")
-    versions: list[DocumentVersion] = Field(description="Словарь со всеми версиями документа по датам")
+    versions: list[DocumentVersion] = Field(description="Словарь со всеми версиями документа по датам",
+                                            min_length=1)
 
     @field_validator("versions", mode="before")
     @classmethod
