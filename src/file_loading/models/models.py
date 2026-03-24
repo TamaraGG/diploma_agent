@@ -39,6 +39,12 @@ class WebPage(BaseModel):
 
 
 class Document(BaseModel):
+    name: str
+    load_date: datetime | None = None
+    url: str
+
+
+class DocumentVersion(BaseModel):
     name: str = Field(description="Название документа")
     versions: dict[datetime, list[str]] = Field(description="Словарь со всеми версиями документа по датам")
 
