@@ -15,7 +15,7 @@ class UniversalScraper(BaseScraper):
     def __enter__(self):
         self.playwright: Playwright = sync_playwright().start()
 
-        self.browser: Browser = self.playwright.chromium.launch(headless=False, slow_mo=300)
+        self.browser: Browser = self.playwright.chromium.launch()
         self.context: BrowserContext = self.browser.new_context()
         self.page: Page = self.context.new_page()
 
