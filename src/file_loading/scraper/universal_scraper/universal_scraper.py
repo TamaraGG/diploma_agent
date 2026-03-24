@@ -64,7 +64,7 @@ class UniversalScraper(BaseScraper):
             return [self.url]
         try:
             while self.current_locator is not self.page.locator("body"):
-                links = self._get_locator_files(self.current_locator)
+                links = self._get_document_locators(self.current_locator)
                 if links:
                     return links
                 self.current_locator = self.current_locator.locator("..")
@@ -75,7 +75,7 @@ class UniversalScraper(BaseScraper):
         return []
 
 
-    def _get_locator_files(self, locator: Locator, file_types: list[str] | None = None) -> list[str]:
+    def _get_document_locators(self, locator: Locator, file_types: list[str] | None = None) -> list[Locator]:
         """Возвращает все файлы в локаторе."""
 
         href = locator.get_attribute("href") or None
