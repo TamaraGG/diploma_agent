@@ -79,8 +79,8 @@ class UniversalScraper(BaseScraper):
         """Возвращает все файлы в локаторе."""
 
         href = locator.get_attribute("href") or None
-        if href and self._is_url_file(urljoin(self.url, href)):
-            return [urljoin(self.url, href)]
+        if href and self.is_url_file(urljoin(self.url, href)):
+            return [locator]
 
         all_links = locator.locator("a").all()
         valid_files = []
@@ -98,7 +98,7 @@ class UniversalScraper(BaseScraper):
 
             if is_file:
                 if full_url not in valid_files:
-                    valid_files.append(full_url)
+                    valid_files.append(link)
 
         return valid_files
 
