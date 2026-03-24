@@ -1,3 +1,4 @@
+from src.file_loading.functions.save_time import save_time
 from src.file_loading.loader.web_file_loader import WebFileLoader
 from src.file_loading.models.models import WebPage, DocumentVersion
 from src.file_loading.functions.get_web_pages import get_web_pages
@@ -40,3 +41,4 @@ if __name__ == '__main__':
     for link in files_links:
         WebFileLoader.load_file(link.url, f"downloads")
 
+    save_time()
