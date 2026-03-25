@@ -53,5 +53,5 @@ class Document(BaseModel):
     @classmethod
     def sort_versions(cls, value: Any) -> Any:
         if isinstance(value, list) and value and isinstance(value[0], DocumentVersion):
-            sorted(value, key=lambda x: x.load_date)
+            sorted(value, key=lambda x: x.load_date, reverse=True)
         return value
