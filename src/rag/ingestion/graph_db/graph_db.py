@@ -1,6 +1,6 @@
 from langchain_core.documents import Document
 
-from src.rag.chunking.chunk_data import chunk_data
+from src.rag.chunking.old.split_data_to_chunks import split_data_to_chunks
 
 
 async def build_knowledge_graph(
@@ -12,4 +12,5 @@ async def build_knowledge_graph(
     )
 
     for i, doc in enumerate(docs):
+        pass
 
