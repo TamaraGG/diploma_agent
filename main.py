@@ -38,10 +38,11 @@ if __name__ == '__main__':
         files_links += links
 
     # MANAGE VERSIONS
-    print(VersionManager.get_last_common_month(documents))
+    print(f"num of docs: {len(documents)}")
+    versions = VersionManager.get_last_common_month(documents)
 
     # LOAD FILES BY LINKS
-    for link in files_links:
-        WebFileLoader.load_file(link.url, f"downloads")
+    for version in versions:
+        WebFileLoader.load_file(version.url, f"downloads")
 
     save_time()
