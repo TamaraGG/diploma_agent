@@ -4,10 +4,10 @@ from urllib.parse import urljoin
 
 from playwright.sync_api import Playwright, Browser, Page, Locator
 
-from src.file_loading.models.models import DocumentVersion
-from src.file_loading.scraper.sbr_scraper.strategies import get_date_from_referenceable, \
+from src.data_files_loading.models.models import DocumentVersion
+from src.data_files_loading.scraper.sbr_scraper.strategies import get_date_from_referenceable, \
     get_date_from_versions_item
-from src.file_loading.scraper.universal_scraper.universal_scraper import UniversalScraper
+from src.data_files_loading.scraper.universal_scraper.universal_scraper import UniversalScraper
 
 LOCATOR_TYPES = Literal["referenceable", "versions_item", "plain"]
 

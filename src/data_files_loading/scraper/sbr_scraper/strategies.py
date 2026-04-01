@@ -2,7 +2,7 @@ from datetime import datetime
 
 from playwright.sync_api import Locator
 
-from src.file_loading.functions.extract_date_from_text import extract_date_from_text
+from src.data_files_loading.functions.extract_date_from_text import extract_date_from_text
 
 
 def get_date_from_referenceable(locator: Locator) -> datetime | None:

@@ -1,7 +1,7 @@
 from datetime import datetime
 
-from src.file_loading.models.models import Document, DocumentVersion
-from src.file_loading.version_manager.base_version_manager import BaseVersionManager
+from src.data_files_loading.models.models import Document, DocumentVersion
+from src.data_files_loading.version_manager.base_version_manager import BaseVersionManager
 
 
 class VersionManager(BaseVersionManager):

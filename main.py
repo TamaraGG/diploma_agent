@@ -1,11 +1,11 @@
-from src.file_loading.functions.save_time import save_time
-from src.file_loading.loader.web_file_loader import WebFileLoader
-from src.file_loading.models.models import WebPage, DocumentVersion, Document
-from src.file_loading.functions.get_web_pages import get_web_pages
-from src.file_loading.scraper.sbr_scraper.sbr_scraper import SbrScraper
-from src.file_loading.version_manager.version_manager import VersionManager
+from src.data_files_loading.functions.save_time import save_time
+from src.data_files_loading.loader.web_file_loader import WebFileLoader
+from src.data_files_loading.models.models import WebPage, DocumentVersion, Document
+from src.data_files_loading.functions.get_web_pages import get_web_pages
+from src.data_files_loading.scraper.sbr_scraper.sbr_scraper import SbrScraper
+from src.data_files_loading.version_manager.version_manager import VersionManager
 
-CONFIG_PATH = "src/file_loading/config.yaml"
+CONFIG_PATH = "src/data_files_loading/config.yaml"
 
 if __name__ == '__main__':
 

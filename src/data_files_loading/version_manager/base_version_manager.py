@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 
-from src.file_loading.models.models import Document, DocumentVersion
+from src.data_files_loading.models.models import Document, DocumentVersion
 
 
 class BaseVersionManager(ABC):

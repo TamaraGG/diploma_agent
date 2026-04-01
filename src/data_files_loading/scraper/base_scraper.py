@@ -2,7 +2,7 @@ from abc import ABC, abstractmethod
 
 from playwright.sync_api import Locator
 
-from src.file_loading.models.models import DocumentVersion
+from src.data_files_loading.models.models import DocumentVersion
 
 
 class BaseScraper(ABC):

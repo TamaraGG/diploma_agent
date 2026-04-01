@@ -2,7 +2,7 @@ import yaml
 from pydantic import ValidationError
 from yaml import SafeLoader
 
-from src.file_loading.models.models import WebPage
+from src.data_files_loading.models.models import WebPage
 
 
 def get_web_pages(config_path: str) -> list[WebPage]:
