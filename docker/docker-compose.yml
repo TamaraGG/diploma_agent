@@ -1,10 +1,9 @@
 version: '3.8'
 
 services:
-  postgres-vector:
-    # официальный образ с уже установленным pgvector на базе Postgres 16
-    image: pgvector/pgvector:pg16
-    container_name: langchain_postgres
+  timescaledb:
+    build: .  # Собираем из Dockerfile вместо использования готового образа
+    container_name: timescaledb
     restart: always
     environment:
       POSTGRES_USER: ${POSTGRES_USER}
@@ -13,8 +12,8 @@ services:
     ports:
       - "${POSTGRES_PORT}:5432"
     volumes:
-      - pgdata:/var/lib/postgresql/data
+      - timescaledb_data:/home/postgres/pgdata/data
       - ./init.sql:/docker-entrypoint-initdb.d/init.sql
 
 volumes:
-  pgdata:
+  timescaledb_data:

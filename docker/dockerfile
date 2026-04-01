@@ -1,0 +1,23 @@
+# Dockerfile
+FROM timescale/timescaledb-ha:pg17
+
+# Устанавливаем необходимые зависимости для сборки
+USER root
+RUN apt-get update && apt-get install -y \
+    build-essential \
+    git \
+    postgresql-server-dev-17 \
+    && rm -rf /var/lib/apt/lists/*
+
+# Клонируем и устанавливаем pg_textsearch
+RUN git clone https://github.com/timescale/pg_textsearch.git /tmp/pg_textsearch && \
+    cd /tmp/pg_textsearch && \
+    make && \
+    make install && \
+    rm -rf /tmp/pg_textsearch
+
+# Возвращаемся к пользователю postgres
+USER postgres
+
+# Создаем расширение при инициализации
+COPY ./init.sql /docker-entrypoint-initdb.d/init.sql
