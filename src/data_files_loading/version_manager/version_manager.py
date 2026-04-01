@@ -30,11 +30,7 @@ class VersionManager(BaseVersionManager):
 
         doc_versions = []
         for document in documents:
-            prev_version = document.versions[0]
-            for version in document.versions[1:]:
-                if version.load_date < target_date:
-                    doc_versions.append(prev_version)
-                    break
-                prev_version = version
-
+            v = [version for version in document.versions
+                 if datetime(version.load_date.year, version.load_date.month, 1) == target_date]
+            doc_versions.append(v[-1] if v else None)
         return doc_versions
