@@ -6,19 +6,49 @@ authors = ["myasko <komondor25@gmail.com>"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
-python = "^3.14"
+python = "^3.12"
+torch = {version = "2.5.1", source = "pytorch-cpu"}
+torchvision = {version = "0.20.1", source = "pytorch-cpu"}
 requests = "^2.32.5"
 playwright = "^1.58.0"
 pandas = "^3.0.1"
 basemodel = "^20190604.1625"
 pydantic = "^2.12.5"
 pyyaml = "^6.0.3"
+langchain = "^1.2.13"
+langchain-experimental = "^0.4.1"
+pyvis = "^0.3.2"
+dotenv = "^0.9.9"
+gigachat = "^0.2.0"
+json-repair = "^0.58.7"
+asyncio = "^4.0.0"
+markitdown-no-magika = "^0.1.2"
+langchain-docling = "^2.0.0"
+docling = "^2.82.0"
+langchain-postgres = "^0.0.17"
+hf-xet = "^1.4.2"
+pypdf = "^6.9.2"
+hierarchical = "^0.0.9"
+docling-hierarchical-pdf = "^0.1.6"
+psycopg = {extras = ["binary"], version = "^3.3.3"}
+timescale-vector = "^0.0.7"
+instructor = "^1.14.5"
+anthropic = "^0.86.0"
+cohere = "^5.21.1"
+langchain-pgvec-textsearch = "^0.1.4"
+sentence-transformers = "^5.3.0"
+langchain-huggingface = "^1.2.1"
 
 
 [[tool.poetry.source]]
 name = "pypi-mirror"
 url = "https://pypi.tuna.tsinghua.edu.cn/simple"
 priority = "primary"
+
+[[tool.poetry.source]]
+name = "pytorch-cpu"
+url = "https://download.pytorch.org/whl/cpu"
+priority = "supplemental"
 
 [build-system]
 requires = ["poetry-core"]
