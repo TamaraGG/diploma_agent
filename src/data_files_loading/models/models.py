@@ -1,7 +1,9 @@
 from typing import Any, Self
 
-from pydantic import BaseModel, field_validator, Field
+from pydantic import BaseModel, field_validator, Field, ConfigDict
 from datetime import date, datetime
+
+from database.models import FileProcessingStatus
 
 
 def find_all_paths(data: str | list[str] | dict[str, str | dict | list]) -> list[list[str]]:
@@ -39,9 +41,16 @@ class WebPage(BaseModel):
 
 
 class DocumentVersion(BaseModel):
+    model_config = ConfigDict(from_attributes=True, use_enum_values=True)
+
     name: str
     load_date: datetime | None = None
     url: str
+
+    file_hash: str | None = None
+    etag: str | None = None
+    local_path: str | None = None
+    status: FileProcessingStatus = FileProcessingStatus.DISCOVERED
 
 
 class Document(BaseModel):
