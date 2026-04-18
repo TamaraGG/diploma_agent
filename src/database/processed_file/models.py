@@ -1,16 +1,10 @@
 import enum
 from datetime import datetime
-from sqlalchemy import String, DateTime, Enum as SQLEnum, func
+from sqlalchemy import String, DateTime, Enum as SQLEnum, func, Text
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
 
-from database.base import Base
-
-
-class FileProcessingStatus(str, enum.Enum):
-    DISCOVERED = "DISCOVERED"
-    PROCESSING = "PROCESSING"
-    PROCESSED = "PROCESSED"
-    FAILED = "FAILED"
+from database.base.base import Base
+from database.base.enums import FileProcessingStatus
 
 
 class ProcessedFile(Base):
@@ -31,3 +25,7 @@ class ProcessedFile(Base):
     created_at: Mapped[datetime] = mapped_column(DateTime, server_default=func.now())
     updated_at: Mapped[datetime] = mapped_column(DateTime, server_default=func.now(), onupdate=func.now())
     error_message: Mapped[str | None] = mapped_column(String)
+
+
+
+
